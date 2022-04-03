@@ -2,6 +2,10 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import './index.css';
 
+type squareProps = {valueN: String, onClick:any};
+type squareState = {stateValue: String};
+
+type boardState = {squares: Array<String>, player: String};
 
 
 class Main extends React.Component {
@@ -14,25 +18,50 @@ class Main extends React.Component {
     }
 }
 
-class Square extends React.Component<{valueN: Number}> {
-    logClick() {
-      console.log('click');
+class Square extends React.Component<squareProps, squareState> {
+
+    state: squareState = {
+      stateValue: "."
     }
+
     render() {
-      console.log('props',this.props);
-      return (
-        <button className="square" onClick={() => this.logClick()}>
-          {this.props.valueN}</button>);
+      return (      
+      <button
+        className="square"
+        onClick={this.props.onClick}
+      >
+        {this.props.valueN}
+      </button>);
     }
 }
   
-  class Board extends React.Component {
-    renderSquare(i: Number) {
-      return <Square valueN={i} />;
+  class Board extends React.Component<{}, boardState> {
+
+    state: boardState = {
+      squares: Array(9).fill(null),
+      player: 'X'
+    }
+
+
+    handleClick(i: number){
+      console.log("clicked", i);
+      this.state.squares[i] = this.state.player;
+      if (this.state.player == 'X')
+        this.state.player = 'O';
+      else
+        this.state.player = 'X'
+      
+      this.setState(this.state);
+    } 
+
+    renderSquare(i: number) {
+      return (<Square 
+        valueN={this.state.squares[i]} 
+        onClick={() => this.handleClick(i)} />);
     }
   
     render() {
-      const status = 'Next player: X';
+      const status = 'Next player: ' + this.state.player;
   
       return (
         <div>
@@ -77,5 +106,6 @@ class Square extends React.Component<{valueN: Number}> {
   
   const container = document.getElementById('root');
   const root = ReactDOM.createRoot(container);
-  root.render(<Main></Main>);
-  
+  root.render(<React.StrictMode>
+    <Main></Main>
+    </React.StrictMode>);
