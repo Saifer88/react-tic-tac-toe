@@ -8,16 +8,6 @@ type squareState = {stateValue: String};
 type boardState = {squares: Array<String>, player: String};
 
 
-class Main extends React.Component {
-    render () {
-        return (
-        <div>shopping list: -..
-            <Game></Game>
-        </div> 
-        );
-    }
-}
-
 class Square extends React.Component<squareProps, squareState> {
 
     state: squareState = {
@@ -107,5 +97,5 @@ class Square extends React.Component<squareProps, squareState> {
   const container = document.getElementById('root');
   const root = ReactDOM.createRoot(container);
   root.render(<React.StrictMode>
-    <Main></Main>
+    <Game></Game>
     </React.StrictMode>);
