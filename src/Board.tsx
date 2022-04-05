@@ -64,7 +64,7 @@ Array<Array<Number>> =
     }
   
     render() {
-      const status = 'Next player: ' + this.state.player;
+      const status = 'Next player is: ' + this.state.player;
   
       return (
         <div>
